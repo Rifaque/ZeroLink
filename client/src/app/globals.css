@@ -128,3 +128,9 @@
   background: #444;
   border-radius: 6px;
 }
+
+html, body {
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}

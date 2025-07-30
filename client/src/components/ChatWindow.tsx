@@ -116,11 +116,40 @@ export default function ChatWindow({ roomId, onToggleSidebar }: ChatWindowProps)
   }, [roomId, user, router])
 
   useEffect(() => {
+    const onResize = () => {
+      const activeElement = document.activeElement
+      const isInputFocused = activeElement && ['TEXTAREA', 'INPUT'].includes(activeElement.tagName)
+      if (isInputFocused) {
+        // Wait a bit for the keyboard animation
+        setTimeout(() => {
+          endRef.current?.scrollIntoView({ behavior: 'smooth' })
+        }, 300)
+      }
+    }
+
+    if (typeof window !== 'undefined' && 'visualViewport' in window) {
+      window.visualViewport?.addEventListener('resize', onResize)
+    }
+
+    return () => {
+      window.visualViewport?.removeEventListener('resize', onResize)
+    }
+  }, [])
+
+
+  useEffect(() => {
     typingUserRef.current = typingUser
   }, [typingUser])
 
 
-  useEffect(() => endRef.current?.scrollIntoView({ behavior: 'smooth' }), [messages])
+  useEffect(() => {
+    if (!loading) {
+      setTimeout(() => {
+        endRef.current?.scrollIntoView({ behavior: 'smooth' })
+      }, 50)
+    }
+  }, [messages, loading])
+
 
   useEffect(() => {
     const el = containerRef.current
@@ -330,6 +359,11 @@ export default function ChatWindow({ roomId, onToggleSidebar }: ChatWindowProps)
             typingTimeoutRef.current = setTimeout(() => {
               typingTimeoutRef.current = null
             }, 2000)
+          }}
+          onFocus={() => {
+            setTimeout(() => {
+              endRef.current?.scrollIntoView({ behavior: 'smooth' })
+            }, 200)
           }}
         />
         <button
