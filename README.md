@@ -2,8 +2,6 @@
 
 **ZeroLink** is a modern full-stack chat application built with the MERN stack and Firebase, designed for real-time, secure, and seamless communication. It features JWT authentication, WebSocket-based messaging, Firebase integration, and a sleek Next.js frontend.
 
-![ZeroLink Banner](./client/public/banner.png) <!-- Replace with actual banner path if any -->
-
 ## 🚀 Features
 
 - 🧠 Firebase integration for auth & message storage
