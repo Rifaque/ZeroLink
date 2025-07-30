@@ -215,7 +215,7 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
 
     {/* New Chat Modal */}
     {showNewChat && (
-      <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
         <div className="w-64 bg-[#161b22] text-white rounded-lg shadow-lg p-4 border border-[#2c313a]">
           <h3 className="text-base font-semibold mb-3">Start New Chat</h3>
           <input
@@ -251,7 +251,7 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
 
     {/* Settings Modal */}
     {showSettings && user && (
-      <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50">
         <div className="w-72 bg-[#161b22] text-white rounded-xl shadow-lg p-6 relative border border-[#2c313a]">
           <button
             onClick={() => setShowSettings(false)}
