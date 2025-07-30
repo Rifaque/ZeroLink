@@ -1,3 +1,5 @@
+// client/src/components/Sidebar.tsx
+
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
@@ -6,6 +8,7 @@ import { auth } from '@/lib/firebase'
 import { FiSettings } from 'react-icons/fi'
 import { FiUserPlus, FiSearch, FiX } from 'react-icons/fi'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 
 
 export type ChatRoom = {
@@ -22,7 +25,7 @@ type SidebarProps = {
 
 // Fetch users from backend API
 async function fetchAllUsers(): Promise<Array<{ id: string; name: string }>> {
-  const res = await fetch('http://localhost:5000/api/users')
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`)
   if (!res.ok) throw new Error('Failed to fetch users')
   return res.json()
 }
@@ -38,6 +41,7 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
   const [showSettings, setShowSettings] = useState(false)
   const [loading, setLoading] = useState<boolean>(true)
   const socketRef = useRef<WebSocket | null>(null)
+  const router = useRouter()
 
   // Auth listener
   useEffect(() => {
@@ -91,6 +95,11 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
     setShowNewChat(!showNewChat)
   }
 
+  const handleLogout = async () => {
+    await signOut(auth)
+    router.push('/') // or '/login', depending on your routing
+  }
+
   // Select friend
   const handleSelectFriend = (friendId: string, friendName: string) => {
     if (!rooms.some(r => r.roomId === friendId)) {
@@ -118,7 +127,7 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
     initial={{ x: -100, opacity: 0 }}
     animate={{ x: 0, opacity: 1 }}
     transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-    className="relative w-72 bg-[#0d1117] border-r border-[#1f2937] h-screen flex flex-col text-white font-mono"
+    className="fixed w-72 z-[9999] bg-[#0d1117] border-r border-[#1f2937] h-screen flex flex-col text-white font-mono"
   >
     {/* User Header */}
     <div className="flex items-center gap-3 p-4 border-b border-[#1f2937] bg-[#161b22]">
@@ -147,7 +156,7 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
       {filter && (
         <button
           onClick={() => setFilter('')}
-          className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-300"
+          className="absolute right-5 top-9/16 transform -translate-y-1/2 text-gray-500 hover:text-gray-300"
         >
           <FiX size={16} />
         </button>
@@ -255,7 +264,7 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
 
           <div className="mt-6">
             <button
-              onClick={() => signOut(auth)}
+              onClick={handleLogout}
               className="w-full py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition mb-2"
             >
               Logout

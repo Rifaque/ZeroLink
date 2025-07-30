@@ -32,11 +32,16 @@ const allowedOrigins = [
 ]
 app.use(
   cors({
-    origin: true,
-    credentials: true
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.hubzero.in')) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
+    credentials: true,
   })
 )
-
 app.use(express.json())
 
 // Configure Multer
@@ -282,11 +287,8 @@ app.get('/api/messages', firebaseAuthMiddleware, async (req, res) => {
 
 app.use('/api/auth', authRoutes)
 app.get('/', (_, res) => res.send('ZeroLink Server Running 🚀'))
+app.get('/api/health', (_, res) => res.json({ status: 'ok' }))
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use((req, res, next) => {
-  console.log('🌐 Request Origin:', req.headers.origin);
-  next();
-});
 
 
 // GET /api/users — returns all users (id=email, name=displayName||email)
