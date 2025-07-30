@@ -57,7 +57,7 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
       const wsUrl = process.env.NEXT_PUBLIC_WS_URL || `ws://${window.location.hostname}:5000`
       const userId = user.displayName || user.email || ''
       const socket = new WebSocket(
-        `${wsUrl}?type=getRooms&token=${encodeURIComponent(token)}&userId=${encodeURIComponent(userId)}`
+        `${wsUrl}?token=${encodeURIComponent(token)}&userId=${encodeURIComponent(userId)}`
       )
       socketRef.current = socket
 

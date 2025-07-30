@@ -111,6 +111,8 @@ wss.on('connection', async (ws, req) => {
 
   try {
     const decoded = await adminAuth.verifyIdToken(token);
+
+
     await ensureUserExists(decoded);
     console.log(`✅ Authenticated: ${decoded.email} as ${userId} joined room: ${roomId}`);
 
@@ -119,9 +121,6 @@ wss.on('connection', async (ws, req) => {
 
     // --- 1) SEND ROOM LIST ---
     const buildRooms = async () => {
-      const email = decoded.email!;
-      
-      // Use userId (displayName or email) to find conversations
       const conversations = await Conversation.find({ participants: userId });
 
       const rooms = [];
@@ -297,7 +296,7 @@ app.get('/api/users', async (req, res) => {
     const users = await User.find();
     // Map to only id+name
     const payload = users.map(u => ({
-      id: u.email,
+      id: u.displayName || u.email,
       name: u.displayName || u.email,
     }))
     res.json(payload)
