@@ -31,10 +31,10 @@ export const metadata: Metadata = {
     siteName: 'ZeroLink',
     images: [
       {
-        url: 'https://zerolink.hubzero.in/preview.png', // Customize to match your actual OG image
-        width: 1200,
-        height: 630,
-        alt: 'ZeroLink Chat Preview',
+        url: 'https://zerolink.hubzero.in/icons/icon-512.png', // Customize to match your actual OG image
+        width: 512,
+        height: 512,
+        alt: 'ZeroLink Chat',
       },
     ],
     locale: 'en_US',
