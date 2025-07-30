@@ -39,9 +39,6 @@ zerolink/
 
 ---
 
-### ✅ PART 3 — Setup Instructions & Env Config
-
-```md
 ## 🛠 Setup Instructions
 
 ### 1. Clone the repo
