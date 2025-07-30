@@ -135,6 +135,7 @@ MONGO_URI=mongodb://localhost:27017/zerolink
 - ⏳ **AI Assistant Integration** – Auto-reply, summarize, suggest  
 - ⏳ **Self-Destructing Messages** – Auto-delete after read/time  
 
+---
 
 ## 🧑‍💻 Author
 
