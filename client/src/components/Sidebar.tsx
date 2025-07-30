@@ -88,12 +88,18 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
 
   // Open New Chat Modal
   const handleOpenNewChat = async () => {
-    if (!showNewChat) {
+    if (!showNewChat && user) {
       const list = await fetchAllUsers()
-      setFriends(list.filter(f => !rooms.find(r => r.roomId === f.id)))
+      const myId = user.displayName || user.email || ''
+      setFriends(
+        list
+          .filter(f => f.id !== myId) // ✅ Exclude yourself
+          .filter(f => !rooms.find(r => r.roomId === f.id)) // ✅ Exclude existing rooms
+      )
     }
     setShowNewChat(!showNewChat)
   }
+
 
   const handleLogout = async () => {
     await signOut(auth)
