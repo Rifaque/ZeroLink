@@ -1,0 +1,46 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Compiled output
+dist/
+.next/
+out/
+
+#upload files
+uploads/
+
+# Local env files
+.env
+.env.*.local
+
+# Firebase Admin SDK private key
+firebase-adminsdk.json
+serviceAccountKey.json
+firebase-key.json
+*.firebase.json
+firebase/
+firebaseServiceAccount.json
+
+# Vercel deployment
+.vercel/
+
+# IDE stuff
+.vscode/
+.idea/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
