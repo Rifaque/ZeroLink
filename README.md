@@ -70,11 +70,11 @@ npm run dev
 # Frontend (port 3000)
 cd ../client
 npm run dev
-
-
 ```
+
 Make sure MongoDB and Firebase are set up and connected properly in your .env files.
----
+
+
 
 ## 🔐 Environment Variables
 
