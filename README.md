@@ -124,7 +124,7 @@ MONGO_URI=mongodb://localhost:27017/zerolink
 - ✅ **Typing Indicators** – Show when someone is composing  
 - ✅ **File Uploads** (images, docs)
 
----
+##
 
 ### 🔜 Planned / Upcoming
 
