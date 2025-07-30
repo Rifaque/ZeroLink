@@ -6,7 +6,6 @@
 
 ## 🚀 Features
 
-- 🔐 JWT-based Authentication (Login / Signup)
 - 🧠 Firebase integration for auth & message storage
 - 📡 Real-time messaging via WebSocket (WS)
 - 💬 Typing indicator & chat animations (Framer Motion)
@@ -72,7 +71,7 @@ cd ../client
 npm run dev
 ```
 
-Make sure MongoDB and Firebase are set up and connected properly in your .env files.
+Make sure MongoDB and Firebase are set up and connected properly in your `.env` files.
 
 
 
@@ -115,13 +114,27 @@ MONGO_URI=mongodb://localhost:27017/zerolink
 
 
 
-## ✨ Upcoming Features
+## 💡 Roadmap
 
-- ✅ Admin panel
-- ✅ Group chats & threads
-- ⏳ File uploads
-- ⏳ Message read receipts
-- ⏳ Firebase Cloud Messaging (push)
+### ✅ Already Implemented / In Progress
+
+- ✅ **User Authentication** (Firebase Auth)
+- ✅ **Real-time Messaging** (WebSocket + Firebase)
+- ✅ **Group Chats & Threads**
+- ✅ **Typing Indicators** – Show when someone is composing  
+- ✅ **File Uploads** (images, docs)
+
+---
+
+### 🔜 Planned / Upcoming
+
+- ⏳ **Search Chats / Messages** – Local or server-side   
+- ⏳ **User Profiles & Status** – Avatar, display name, online/offline  
+- ⏳ **Chat Themes** – Light/Dark mode
+- ⏳ **Media Viewer** – Lightbox for images, videos, PDFs  
+- ⏳ **AI Assistant Integration** – Auto-reply, summarize, suggest  
+- ⏳ **Self-Destructing Messages** – Auto-delete after read/time  
+
 
 ## 🧑‍💻 Author
 
@@ -132,5 +145,3 @@ MONGO_URI=mongodb://localhost:27017/zerolink
 
 This project is licensed under the MIT License.  
 Feel free to use, fork, and improve!
-
----
