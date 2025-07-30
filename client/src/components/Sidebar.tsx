@@ -7,7 +7,7 @@ import { onAuthStateChanged, signOut, User } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 import { FiSettings } from 'react-icons/fi'
 import { FiUserPlus, FiSearch, FiX } from 'react-icons/fi'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 
 
@@ -42,6 +42,7 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
   const [loading, setLoading] = useState<boolean>(true)
   const socketRef = useRef<WebSocket | null>(null)
   const router = useRouter()
+  const [isMobile, setIsMobile] = useState(false)
 
   // Auth listener
   useEffect(() => {
@@ -86,6 +87,17 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
     return () => socketRef.current?.close()
   }, [user])
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 640) // Tailwind's `sm` breakpoint
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+
   // Open New Chat Modal
   const handleOpenNewChat = async () => {
     if (!showNewChat && user) {
@@ -129,12 +141,14 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
   }
 
   return (
-    <>
+    <AnimatePresence>
+      {!(isMobile && (showNewChat || showSettings)) && (
       <motion.aside
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
+        exit={{ x: -100, opacity: 0 }}
         transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-        className="fixed w-72 z-[9999] bg-[#0d1117] border-r border-[#1f2937] h-screen flex flex-col text-white font-mono"
+        className="fixed w-72 z-[30] bg-[#0d1117] border-r border-[#1f2937] h-screen flex flex-col text-white font-mono"
       >
         {/* User Header */}
         <div className="flex items-center gap-3 p-4 border-b border-[#1f2937] bg-[#161b22]">
@@ -214,10 +228,12 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
           </ul>
         )}
       </motion.aside>
-      {/* New Chat Modal */}
+      )}
+
+      {/* NEW CHAT MODAL (now outside the sidebar) */}
       {showNewChat && (
-        <div className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="w-64 bg-[#161b22] text-white rounded-lg shadow-lg p-4 border border-[#2c313a]">
+        <div className="fixed inset-0 z-[100]  bg-opacity-40 backdrop-blur-sm flex items-center justify-center px-4">
+          <div className="w-full max-w-sm bg-[#161b22] text-white rounded-lg shadow-lg p-4 border border-[#2c313a]">
             <h3 className="text-base font-semibold mb-3">Start New Chat</h3>
             <input
               type="text"
@@ -250,10 +266,10 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
         </div>
       )}
 
-      {/* Settings Modal */}
+      {/* SETTINGS MODAL (now outside too) */}
       {showSettings && user && (
-        <div className="fixed inset-0 bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="w-72 bg-[#161b22] text-white rounded-xl shadow-lg p-6 relative border border-[#2c313a]">
+        <div className="fixed inset-0 z-[100]  bg-opacity-40 backdrop-blur-sm flex items-center justify-center px-4">
+          <div className="w-full max-w-sm bg-[#161b22] text-white rounded-lg shadow-lg p-4 border border-[#2c313a] relative">
             <button
               onClick={() => setShowSettings(false)}
               className="absolute top-2 right-2 text-gray-400 hover:text-gray-200"
@@ -285,8 +301,7 @@ export default function Sidebar({ activeRoom, onSelectRoom }: SidebarProps) {
             </div>
           </div>
         </div>
-      )}
-    </>
+      )} 
+    </AnimatePresence>
   )
-
-}
+};
